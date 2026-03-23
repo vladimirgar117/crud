@@ -47,7 +47,7 @@ createdAt: new Date("2026-03-13T10:30:00"),
 
 
 
-
+//crear usuarios
 app.post('/usuarios', (req: Request, res: Response) => {
   const nuevoUsuario: Usuario = req.body;
 
@@ -58,8 +58,21 @@ app.post('/usuarios', (req: Request, res: Response) => {
   res.status(201).json({ message: "Usuario creado", usuario: nuevoUsuario });
 });
 
+// obtener todos los usuarios
+app.get('/usuarios', (req: Request, res: Response) => {
+  res.json(usuarios);
+});
 
+// obtener un Jusuario por email
+app.get('/usuarios/:email', (req: Request, res: Response) => {
+  const usuario = usuarios.find(u => u.email === req.params.email);
 
+  if (!usuario) {
+    return res.status(404).json({ message: "Usuario no encontrado" });
+  }
+
+  res.json(usuario);
+});
 
 
 const PORT = 3000;
